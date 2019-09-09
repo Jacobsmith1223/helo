@@ -37,7 +37,7 @@
          
          res.status(200).send(userAccount)
      }
-     else{res.status(403).send('invalid password')}
+     else{res.status(401).send('invalid password')}
  }
 
  module.exports = {

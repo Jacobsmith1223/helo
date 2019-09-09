@@ -1,9 +1,27 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
+import './Nav.css'
 
-export default class Nav extends Component {
+
+class Nav extends Component {
+    constructor(){
+        super()
+        
+        this.state = {
+
+        }
+    }
+    
+
+    
     render() {
+        console.log(this.props)
+        if(this.props.pathname === '/'){
+            return null
+        }else{
         return (
-            <div>
+            <div className="nav">
+                <p>{this.props.username}</p>
                 <button>Home</button>
                 <button>New Post</button>
                 <button>Logout</button>
@@ -11,3 +29,12 @@ export default class Nav extends Component {
         )
     }
 }
+}
+
+
+function mapStateToProps(state){
+    return state
+    
+}
+
+export default connect(mapStateToProps)(Nav)

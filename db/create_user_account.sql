@@ -1,3 +1,4 @@
 INSERT INTO posts
-(author_id, title, img, content,)
-VALUES()
+(title, img, content, author_id)
+VALUES
+($1,$2,$3)

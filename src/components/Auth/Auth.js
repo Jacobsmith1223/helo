@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import './Auth.css'
 import axios from 'axios'
+import {connect} from 'react-redux'
+import {updateDux} from './../../redux/reducer'
 
 
 
-export default class Auth extends Component {
+ class Auth extends Component {
     constructor(){
         super()
 
@@ -26,14 +28,15 @@ export default class Auth extends Component {
     login = () => {
         const {username,password} = this.state;
 
-        axios.post('/auth/login', {username,password}).then(response => {
+        axios.post('/auth/login', {username,password}).then(res => {
+            this.props.updateDux(username)
             if(this.state.error !== true)
             this.props.history.push('/dashboard')
         })
         .catch((err) => {
             this.setState({
                 error:true,
-            
+                errorMessage: err.response.data
             })
             setTimeout(() => {this.setState({
                 error:false,
@@ -46,7 +49,12 @@ export default class Auth extends Component {
     register = () => {
         const {username,password} = this.state;
 
+
         axios.post('/auth/register', {username,password}).then(res => {
+            this.setState({
+                username:''
+            })
+            this.props.updateDux(res.data)
             this.props.history.push('/dashboard')
             console.log(this.props.history)
         })
@@ -102,3 +110,5 @@ export default class Auth extends Component {
         )
     }
 }
+
+export default connect(null,{updateDux})(Auth)
